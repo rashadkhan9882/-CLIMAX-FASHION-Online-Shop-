@@ -1,1 +1,104 @@
-https://github.com/rashadkhan9882/-CLIMAX-FASHION-Online-Shop-/tree/main
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CLIMAX FASHION</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial;color:#292929}
+.top{background:#222;color:white;text-align:center;padding:10px;font-size:12px}
+header{text-align:center;padding:24px;border-bottom:1px solid #eee}
+.logo{font-size:27px;font-weight:bold;letter-spacing:3px}
+.logo span{color:#b38b54}
+nav{display:flex;justify-content:center;gap:25px;padding:15px;border-bottom:1px solid #eee}
+nav a{color:#222;text-decoration:none;font-size:13px}
+.hero{text-align:center;background:#f2eee8;padding:65px 15px}
+.hero h1{font-size:30px;letter-spacing:2px}
+button{cursor:pointer;padding:12px;background:#222;color:white;border:0}
+.section{padding:25px 12px}
+h2{text-align:center}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.product{border:1px solid #eee;padding:8px}
+.product img{width:100%;aspect-ratio:3/4;object-fit:cover}
+.product h3{font-size:14px}
+.price{font-weight:bold;margin:10px 0}
+.product button{width:100%}
+#cart{background:#f5f2ed;padding:20px;margin-top:25px}
+input,select{width:100%;padding:12px;margin:7px 0;border:1px solid #ccc}
+footer{background:#222;color:white;text-align:center;padding:25px}
+</style>
+</head>
+<body>
+<div class="top">WELCOME TO CLIMAX FASHION</div>
+<header>
+<div class="logo">CLIMAX <span>FASHION</span></div>
+<p>STYLE • QUALITY • COMFORT</p>
+</header>
+<nav>
+<a href="#home">HOME</a>
+<a href="#shop">SHOP</a>
+<a href="#cart">CART 🛒</a>
+</nav>
+<section class="hero" id="home">
+<h1>NEW COLLECTION</h1>
+<p>Discover Your Perfect Style</p>
+<button onclick="location.href='#shop'">SHOP NOW</button>
+</section>
+<section class="section" id="shop">
+<h2>OUR COLLECTION</h2>
+<div class="grid" id="products"></div>
+</section>
+<section id="cart">
+<h2>YOUR CART</h2>
+<div id="items">Your cart is empty.</div>
+<p id="total">Total: ৳0</p>
+<h3>DELIVERY DETAILS</h3>
+<input id="name" placeholder="Your Name">
+<input id="phone" placeholder="Phone Number">
+<input id="address" placeholder="Full Address">
+<select id="payment">
+<option>Cash on Delivery</option>
+<option>bKash</option>
+<option>Nagad</option>
+</select>
+<button onclick="order()">ORDER ON WHATSAPP</button>
+</section>
+<footer>
+<h3>CLIMAX FASHION</h3>
+<p>Thank you for shopping with us!</p>
+</footer>
+<script>
+const products=[
+{name:"Anarkali Suit Set",price:2650,img:"https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=500"},
+{name:"Cotton Dress",price:2350,img:"https://images.unsplash.com/photo-1585487000160-6ebcfceb0d03?w=500"},
+{name:"Printed Suit Set",price:2750,img:"https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=500"},
+{name:"Fashion Pant",price:1250,img:"https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=500"}
+];
+let cart=[];
+document.getElementById("products").innerHTML=products.map((p,i)=>`
+<div class="product">
+<img src="${p.img}">
+<h3>${p.name}</h3>
+<div class="price">৳${p.price}</div>
+<button onclick="add(${i})">ADD TO CART</button>
+</div>`).join("");
+function add(i){cart.push(products[i]);show();}
+function show(){
+document.getElementById("items").innerHTML=cart.map((p,i)=>
+`${p.name} - ৳${p.price} <button onclick="removeItem(${i})">Remove</button>`).join("<br><br>")||"Your cart is empty.";
+document.getElementById("total").innerText="Total: ৳"+cart.reduce((s,p)=>s+p.price,0);
+}
+function removeItem(i){cart.splice(i,1);show();}
+function order(){
+let n=document.getElementById("name").value;
+let ph=document.getElementById("phone").value;
+let a=document.getElementById("address").value;
+if(!cart.length||!n||!ph||!a){alert("Please fill all details and add products.");return;}
+let msg=`CLIMAX FASHION ORDER\nName: ${n}\nPhone: ${ph}\nAddress: ${a}\nPayment: ${document.getElementById("payment").value}\nProducts: ${cart.map(p=>p.name+" ৳"+p.price).join(", ")}\nTotal: ৳${cart.reduce((s,p)=>s+p.price,0)}`;
+window.open("https://wa.me/8801XXXXXXXXX?text="+encodeURIComponent(msg),"_blank");
+}
+</script>
+</body>
+</html>
